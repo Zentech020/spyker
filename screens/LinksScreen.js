@@ -1,6 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import { ScrollView, StyleSheet, View, Text, Alert } from 'react-native';
 import { SearchBar, ListItem, Icon } from 'react-native-elements';
 
 const initialList = [
@@ -32,9 +31,9 @@ export default class LinksScreen extends React.Component {
   };
 
   onType = e => {
-    const { list } = this.state;
+    const { list, searchText } = this.state;
 
-    if (e == '') {
+    if (e.trim() == '') {
       this.setState({
         list: initialList
       });
@@ -47,7 +46,7 @@ export default class LinksScreen extends React.Component {
     });
   };
 
-  clearList() {
+  onClear() {
     this.setState({
       list: initialList
     });
@@ -57,12 +56,24 @@ export default class LinksScreen extends React.Component {
     alert('added item !');
   }
 
-  render() {
-    const { list } = this.state;
+  onPress() {
+    Alert.alert(
+      'Alert Title',
+      'My Alert Msg',
+      [
+        { text: 'Add', onPress: () => console.log('OK Pressed') },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
-    list.map((li, i) => {
-      console.log(i);
-    });
+  render() {
+    const { list, searchText } = this.state;
 
     return (
       <ScrollView style={styles.container}>
@@ -71,8 +82,7 @@ export default class LinksScreen extends React.Component {
         <SearchBar
           lightTheme
           onChangeText={this.onType}
-          onClear={this.clearList}
-          onClear={() => this.clearList()}
+          onClear={() => this.onClear()}
           placeholder="Type Here..."
         />
 
@@ -86,6 +96,7 @@ export default class LinksScreen extends React.Component {
                 subtitle={l.subtitle}
                 rightIcon={<Icon name={'add'} size={20} />}
                 onPressRightIcon={() => this.onPressAdd()}
+                onPress={() => this.onPress()}
               />
             ))
           ) : (

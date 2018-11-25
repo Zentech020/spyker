@@ -11,11 +11,11 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const textStyles = {
-  fontSize: '20px'
+  fontSize: 20
 };
 
 const activeTextStyles = {
-  fontSize: '28px'
+  fontSize: 28
 };
 
 const activeStyles = {
@@ -37,11 +37,11 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused, tintColor }) =>
     focused ? (
       <View styles={activeStyles}>
-        <Text style={activeTextStyles}>🏠</Text>
+        <Text style={activeTextStyles}>🏷</Text>
       </View>
     ) : (
       <View>
-        <Text style={textStyles}>🏠</Text>
+        <Text style={textStyles}>🏷</Text>
       </View>
     )
 };
@@ -72,13 +72,20 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'My list',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'}
-    />
-  )
+  showLabel: false,
+  tabBarOptions: {
+    showLabel: false
+  },
+  tabBarIcon: ({ focused, tintColor }) =>
+    focused ? (
+      <View styles={activeStyles}>
+        <Text style={activeTextStyles}>🗒</Text>
+      </View>
+    ) : (
+      <View>
+        <Text style={textStyles}>🗒</Text>
+      </View>
+    )
 };
 
 export default createBottomTabNavigator({
